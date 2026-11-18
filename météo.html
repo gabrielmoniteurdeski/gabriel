@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Les tendances météo de La Rosière selon Skipass."
+    />
+    <meta name="theme-color" content="#c92338" />
+    <title>Météo — Gabriel, moniteur de ski à La Rosière</title>
+    <link rel="stylesheet" href="consent.css" />
+    <style>
+      :root {
+        color-scheme: light;
+        --red: #c92338;
+        --red-dark: #a91d30;
+        --ink: #25282c;
+        --muted: #70767c;
+        --paper: #fbfaf8;
+        --white: #fff;
+        --line: #e9e6e2;
+        --sans: "Poppins", sans-serif;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        min-height: 100vh;
+        min-height: 100svh;
+        flex-direction: column;
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      a:focus-visible,
+      button:focus-visible {
+        outline: 3px solid var(--red);
+        outline-offset: 4px;
+      }
+
+      .shell {
+        width: min(1120px, calc(100% - 56px));
+        margin-inline: auto;
+      }
+
+      .site-header,
+      .site-footer {
+        border-color: var(--line);
+        border-style: solid;
+      }
+
+      .site-header {
+        border-width: 0 0 1px;
+      }
+
+      .site-footer {
+        border-width: 1px 0 0;
+      }
+
+      .navigation {
+        display: flex;
+        width: min(1120px, calc(100% - 56px));
+        min-height: 82px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+        margin-inline: auto;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+      }
+
+      .brand-title {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 14px;
+        letter-spacing: -0.02em;
+      }
+
+      .language-flags {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 12px;
+        line-height: 1;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        padding: 0 14px;
+        border: 1px solid var(--red);
+        border-radius: 3px;
+        background: var(--red);
+        color: var(--white);
+        font-size: 11px;
+        font-weight: 750;
+        text-decoration: none;
+        transition: background 160ms ease, transform 160ms ease;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        border-color: var(--red-dark);
+        background: var(--red-dark);
+      }
+
+      main {
+        flex: 1;
+        padding-block: 18px;
+      }
+
+      .news {
+        max-width: 680px;
+        margin-inline: auto;
+        text-align: center;
+      }
+
+      .weather {
+        max-width: 1000px;
+        margin: 14px auto 0;
+        text-align: left;
+      }
+
+      .weather h2 {
+        margin: 0 0 8px;
+        font-size: clamp(22px, 3vw, 30px);
+        letter-spacing: -0.03em;
+      }
+
+      .weather-fallback {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .weather-fallback a {
+        color: var(--red-dark);
+      }
+
+      .weather-table-scroll[hidden] {
+        display: none;
+      }
+
+      .weather-status {
+        min-height: 1.5em;
+        margin-block: 10px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .weather-status[data-state="error"] {
+        color: var(--red-dark);
+      }
+
+      .weather-table-scroll {
+        overflow-x: auto;
+        border: 1px solid #c8dfe9;
+        border-radius: 6px;
+        background: #f0f8fc;
+        box-shadow: 0 8px 24px rgb(26 92 120 / 8%);
+      }
+
+      .weather-table {
+        width: 100%;
+        border-collapse: collapse;
+        color: #213944;
+        font-size: 13px;
+        text-align: left;
+      }
+
+      .weather-table caption {
+        padding: 8px 12px;
+        background: #e3f1f7;
+        color: #315564;
+        font-size: 12px;
+        text-align: left;
+      }
+
+      .weather-status {
+        float: right;
+        margin: 0;
+        color: var(--muted);
+        font-size: inherit;
+        text-align: right;
+      }
+
+      .weather-table thead {
+        background: #126b91;
+        color: #fff;
+      }
+
+      .weather-table th,
+      .weather-table td {
+        padding: 7px 10px;
+        border-bottom: 1px solid #d5e7ee;
+        vertical-align: middle;
+      }
+
+      .weather-table th {
+        font-size: 11px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .weather-table tbody tr:nth-child(even) {
+        background: #e7f3f8;
+      }
+
+      .weather-table tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .weather-day {
+        color: #164b65;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .weather-condition {
+        display: flex;
+        min-width: 115px;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .weather-icon {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+      }
+
+      .weather-wind {
+        white-space: nowrap;
+      }
+
+      .weather-wind-direction {
+        display: block;
+        color: #627985;
+        font-size: 11px;
+      }
+
+      .weather-snow {
+        color: #126b91;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--red);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0 0 4px;
+        font-size: clamp(26px, 3vw, 36px);
+        letter-spacing: -0.04em;
+      }
+
+      h1 span {
+        color: var(--red);
+      }
+
+      .intro {
+        margin: 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .footer-inner {
+        display: flex;
+        min-height: 82px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .footer-inner p {
+        margin: 0;
+      }
+
+      @media (max-width: 850px) {
+        .shell,
+        .navigation {
+          width: min(100% - 40px, 680px);
+        }
+      }
+
+      @media (max-width: 700px) {
+        .navigation {
+          flex-wrap: wrap;
+          justify-content: center;
+          padding-block: 12px;
+        }
+
+        .header-actions {
+          width: 100%;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .button {
+          flex: 1 1 100px;
+          padding-inline: 8px;
+          font-size: 10px;
+        }
+
+        main {
+          padding-block: 14px;
+        }
+
+        .footer-inner {
+          flex-wrap: wrap;
+          justify-content: center;
+          padding-block: 16px;
+          text-align: center;
+        }
+
+        .weather {
+          margin-top: 12px;
+        }
+
+        .weather-table thead {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          clip-path: inset(50%);
+          white-space: nowrap;
+        }
+
+        .weather-table caption {
+          display: flex;
+          width: 100%;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .weather-status {
+          float: none;
+          flex: 0 0 auto;
+          margin-left: auto;
+        }
+
+        .weather-table,
+        .weather-table tbody {
+          display: block;
+          width: 100%;
+        }
+
+        .weather-table tbody tr {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          margin: 10px;
+          overflow: hidden;
+          border: 1px solid #c8dfe9;
+          border-radius: 5px;
+          background: #fff;
+        }
+
+        .weather-table tbody tr:nth-child(even) {
+          background: #fff;
+        }
+
+        .weather-table tbody td {
+          display: flex;
+          flex-direction: column;
+          min-width: 0;
+          align-items: flex-start;
+          justify-content: center;
+          gap: 3px;
+          padding: 7px 8px;
+          border-bottom: 1px solid #e1edf1;
+          font-size: 12px;
+        }
+
+        .weather-table tbody td::before {
+          color: #627985;
+          content: attr(data-label);
+          font-size: 10px;
+          font-weight: 600;
+        }
+
+        .weather-table tbody td:first-child,
+        .weather-table tbody td:nth-child(2) {
+          grid-column: 1 / -1;
+          justify-content: flex-start;
+        }
+
+        .weather-table tbody td:first-child {
+          background: #e3f1f7;
+          color: #164b65;
+        }
+
+        .weather-table tbody td:first-child::before {
+          content: none;
+        }
+
+        .weather-table tbody td:nth-child(2)::before {
+          content: "Météo";
+        }
+
+        .weather-table tbody td:nth-child(3),
+        .weather-table tbody td:nth-child(4),
+        .weather-table tbody td:nth-child(5),
+        .weather-table tbody td:nth-child(6),
+        .weather-table tbody td:nth-child(7) {
+          overflow-wrap: anywhere;
+        }
+
+        .weather-table tbody tr:last-child td {
+          border-bottom: 1px solid #e1edf1;
+        }
+
+        .weather-table tbody tr:last-child td:first-child {
+          border-bottom: 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="header.css" />
+    <link rel="stylesheet" href="footer.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="navigation shell">
+        <a class="brand" href="index.html" aria-label="Accueil — Gabriel, moniteur de ski">
+          <span class="brand-copy">
+            <strong class="brand-title">
+              Gabriel · Moniteur de ski
+              <span class="language-flags" aria-label="Drapeaux français et britannique">
+                <span role="img" aria-label="France">🇫🇷</span>
+                <span role="img" aria-label="Grande-Bretagne">🇬🇧</span>
+              </span>
+            </strong>
+          </span>
+        </a>
+        <nav class="header-actions" aria-label="Navigation principale">
+          <a class="button header-button" href="index.html">ACCUEIL</a>
+          <details class="header-dropdown">
+            <summary class="button header-button" aria-current="page">ACTUALITÉ</summary>
+            <div class="header-dropdown-menu">
+              <a href="météo.html#weather">MÉTÉO</a>
+            </div>
+          </details>
+          <a class="button header-button" href="albums.html">PHOTOS</a>
+          <a class="button header-button" href="a-propos.html">A PROPOS</a>
+          <a class="button header-button" href="contact.html">CONTACT</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="news" aria-labelledby="news-title">
+        <h1 id="news-title"><span>Météo</span> à La Rosière</h1>
+        <p class="intro">
+          Retrouvez ici les tendances météo de
+          <a href="https://www.skipass.com/" rel="noopener noreferrer" target="_blank">www.skipass.com</a>
+        </p>
+      </section>
+      <section class="weather" id="weather" aria-label="Météo à La Rosière">
+        <p class="weather-fallback" id="weather-fallback">
+          Les prévisions sont récupérées après votre accord. Vous pouvez aussi consulter Skipass
+          directement :
+          <a href="https://www.skipass.com/meteo/la-rosiere.html" rel="noopener noreferrer" target="_blank">
+            Consulter la météo sur Skipass
+          </a>.
+        </p>
+        <div class="weather-table-scroll" id="weather-table-container" hidden>
+          <table class="weather-table">
+            <caption>
+              Prévisions Skipass — La Rosière
+              <span class="weather-status" id="weather-status" role="status" aria-live="polite"></span>
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Jour</th>
+                <th scope="col">Conditions</th>
+                <th scope="col">Temp. max/min à 1 850 m</th>
+                <th scope="col">Vent</th>
+                <th scope="col">Limite pluie-neige</th>
+                <th scope="col">Neige</th>
+                <th scope="col">Cumul</th>
+              </tr>
+            </thead>
+            <tbody id="weather-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner shell">
+        <p>La Rosière</p>
+        <p>© Tous droits réservés</p>
+        <p><a href="confidentialite.html">Confidentialité</a> · <a class="consent-settings-link" href="#cookie-settings">Gérer mes choix</a></p>
+      </div>
+    </footer>
+    <aside class="consent-banner" id="consent-banner" role="dialog" aria-labelledby="consent-title" aria-describedby="consent-description" hidden>
+      <div>
+        <strong id="consent-title">Votre choix de confidentialité</strong>
+        <p id="consent-description">Vous pouvez accepter ou refuser les contenus facultatifs : Google Fonts et les données météo Skipass affichées dans Actualité. Leur chargement peut transmettre à ces services votre adresse IP et des informations sur votre navigateur. <a href="confidentialite.html">En savoir plus</a>.</p>
+      </div>
+      <div class="consent-actions">
+        <button class="consent-button" id="consent-reject" type="button">Tout refuser</button>
+        <button class="consent-button" id="consent-accept" type="button">Accepter tous les cookies</button>
+      </div>
+    </aside>
+    <script src="weather.js"></script>
+    <script src="consent.js"></script>
+  </body>
+</html>
