@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#c92338" />
+    <title>Confidentialité et cookies — Gabriel, moniteur de ski à La Rosière</title>
+    <link rel="stylesheet"     href="../consent.css" />
+    <style>
+      :root {
+        color-scheme: light;
+        --red: #c92338;
+        --red-dark: #a91d30;
+        --ink: #25282c;
+        --muted: #70767c;
+        --paper: #fbfaf8;
+        --white: #fff;
+        --line: #e9e6e2;
+        --sans: "Poppins", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font: 16px/1.7 Arial, sans-serif;
+      }
+
+      main,
+      footer {
+        width: min(760px, calc(100% - 40px));
+        margin-inline: auto;
+      }
+
+      main a,
+      footer a {
+        color: var(--red);
+      }
+
+      main {
+        padding-block: 40px 56px;
+      }
+
+      h1 {
+        line-height: 1.2;
+      }
+
+      h2 {
+        margin-top: 32px;
+        font-size: 20px;
+      }
+
+      .updated {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      footer {
+        padding-block: 18px;
+        border-top: 1px solid var(--line);
+        font-size: 13px;
+      }
+    </style>
+    <link rel="stylesheet" href="../header.css" />
+    <link rel="stylesheet" href="../footer.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="navigation shell">
+        <a class="brand" href="../accueil/" aria-label="Accueil — Gabriel, moniteur de ski">
+          <span class="brand-copy">
+            <strong class="brand-title">
+              Gabriel · Moniteur de ski
+              <span class="language-flags" aria-label="Drapeaux français et britannique">
+                <span role="img" aria-label="France">🇫🇷</span>
+                <span role="img" aria-label="Grande-Bretagne">🇬🇧</span>
+              </span>
+            </strong>
+          </span>
+        </a>
+        <nav class="header-actions" aria-label="Navigation principale">
+          <a class="button header-button" href="../accueil/">ACCUEIL</a>
+          <a class="button header-button" href="../photos/">PHOTOS</a>
+          <a class="button header-button" href="../a-propos/">A PROPOS</a>
+          <a class="button header-button" href="../contact/">CONTACT</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <h1>Confidentialité et cookies</h1>
+      <p class="updated">Mise à jour : 18 novembre 2026</p>
+
+      <h2>Cookies et services facultatifs</h2>
+      <p>
+        Google Fonts (Poppins) fournit la police utilisée sur le site et n’est chargé qu’après
+        votre accord. Google peut recevoir votre adresse IP et des informations techniques sur
+        votre navigateur. La demande de police est traitée selon sa
+        <a href="https://policies.google.com/privacy" rel="noopener noreferrer" target="_blank">politique de confidentialité</a>.
+      </p>
+      <p>
+        Le bouton « Accepter les contenus facultatifs » concerne les contenus facultatifs
+        effectivement présents sur le site au moment de votre choix. Il n’active pas à l’avance
+        de nouveaux services qui pourraient être ajoutés ultérieurement. Si vous refusez, le site
+        utilise les polices déjà disponibles sur votre appareil.
+      </p>
+
+      <h2>Mémorisation de votre choix</h2>
+      <p>
+        Votre décision (accepter ou refuser les contenus facultatifs) est enregistrée dans le
+        stockage local de votre navigateur, et non dans un cookie, afin de ne pas vous reposer la
+        question à chaque page. Elle expire après six mois. Vous pouvez la modifier ou la retirer
+        à tout moment avec le lien « Gérer mes choix » en bas de chaque page.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Pour toute question relative à ces informations ou à votre choix, écrivez à
+        <a href="mailto:veillon98@gmail.com">veillon98@gmail.com</a>.
+      </p>
+      <p>
+        Cette notice décrit les services actuellement repérés. Elle devra être mise à jour si
+        d’autres cookies, traceurs, intégrations ou traitements de données sont ajoutés.
+      </p>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>La Rosière</p>
+        <p>© Tous droits réservés</p>
+        <p><a href="../confidentialite/">Confidentialité</a> · <a class="consent-settings-link" href="#cookie-settings">Gérer mes choix</a></p>
+      </div>
+    </footer>
+    <aside class="consent-banner" id="consent-banner" role="dialog" aria-labelledby="consent-title" aria-describedby="consent-description" hidden>
+      <div>
+        <strong id="consent-title">Votre choix de confidentialité</strong>
+        <p id="consent-description">Vous pouvez accepter ou refuser le chargement facultatif de Google Fonts. Cette demande peut transmettre à Google votre adresse IP et des informations sur votre navigateur. <a href="../confidentialite/">En savoir plus</a>.</p>
+      </div>
+      <div class="consent-actions">
+        <button class="consent-button" id="consent-reject" type="button">Tout refuser</button>
+        <button class="consent-button" id="consent-accept" type="button">Accepter les contenus facultatifs</button>
+      </div>
+    </aside>
+    <script src="../consent.js"></script>
+  </body>
+</html>

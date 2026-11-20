@@ -81,4 +81,13 @@
       acceptButton.focus();
     });
   });
+
+  banner.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      banner.hidden = true;
+      const settingsLink = document.querySelector(".consent-settings-link");
+      settingsLink?.focus();
+    }
+  });
 })();
