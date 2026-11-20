@@ -27,14 +27,6 @@
     document.querySelector("#google-fonts-stylesheet")?.remove();
   };
 
-  const setOptionalContentConsent = (accepted) => {
-    document.dispatchEvent(
-      new CustomEvent("site:optional-content-consent", {
-        detail: { accepted },
-      }),
-    );
-  };
-
   const saveConsent = (choice) => {
     const preference = {
       choice,
@@ -49,10 +41,8 @@
 
     if (choice === "accepted") {
       loadGoogleFonts();
-      setOptionalContentConsent(true);
     } else {
       unloadGoogleFonts();
-      setOptionalContentConsent(false);
     }
 
     banner.hidden = true;
@@ -73,10 +63,8 @@
   ) {
     if (preference.choice === "accepted") {
       loadGoogleFonts();
-      setOptionalContentConsent(true);
     } else {
       unloadGoogleFonts();
-      setOptionalContentConsent(false);
     }
     banner.hidden = true;
   } else {
